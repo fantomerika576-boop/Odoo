@@ -1,9 +1,27 @@
-from odoo import models, fields
+from datetime import date
+
+from odoo import models, fields, api
 
 
-class MyPartner(models.Model):
-    _name = "my.partner"
-    _description = "My Partner"
+class ResPartner(models.Model):
+    _inherit = "res.partner"
 
-    name = fields.Char(string="Name", required=True)
-    phone = fields.Char(string="Phone")
+    birthday = fields.Date(string="Birthday")
+
+    birthday_message = fields.Char(
+        string="Birthday Greeting",
+        compute="_compute_birthday_message"
+    )
+
+    @api.depends("birthday")
+    def _compute_birthday_message(self):
+        today = date.today()
+        for partner in self:
+            if (
+                partner.birthday
+                and partner.birthday.month == today.month
+                and partner.birthday.day == today.day
+            ):
+                partner.birthday_message = "Happy Birthday!"
+            else:
+                partner.birthday_message = ""
