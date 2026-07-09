@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_birthday" model="mail.template">
+        <field name="name">Поздравление с Днём Рождения</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">С Днём Рождения, {{ object.name }}! 🎉</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; font-size: 14px;">
+                <p>Здравствуйте, <strong t-out="object.name"/>!</p>
+                <p>Поздравляем Вас с Днём Рождения! Желаем здоровья, счастья
+                   и всего самого наилучшего.</p>
+                <p>Ваша команда 🎂</p>
+            </div>
+        </field>
+    </record>
+</odoo>
